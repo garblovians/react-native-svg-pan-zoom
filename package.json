@@ -1,7 +1,7 @@
 {
-  "name": "@garblovians/react-native-svg-pan-zoom",
+  "name": "react-native-svg-pan-zoom",
   "version": "0.1.0",
-  "description": "Pan-zoom for react-native-svg via \"Google Maps\"-style pinch and drag gestures",
+  "description": "Pan-zoom for react-native-svg via 'Google Maps'-style pinch and drag gestures",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -23,7 +23,10 @@
     "typescript",
     "javascript"
   ],
-  "author": "Lukas Hedegaard <lxhdgd@gmail.com>",
+  "authors": [
+    "Lukas Hedegaard <lxhdgd@gmail.com> (https://github.com/LukasHedegaard)",
+    "Søren Peter Andersen (https://github.com/sorenpa)"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/garblovians/react-native-svg-pan-zoom/issues"
