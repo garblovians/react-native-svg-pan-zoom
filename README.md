@@ -24,21 +24,21 @@ class Example extends Component {
       <View style = {{ width: '100%', height:'100%' }}>
 
         <SvgPanZoom
-          canvasHeight = {500}
-          canvasWidth  = {500}
-          minScale     = {0.5}
-          maxScale     = {1.2}
-          initialZoom  = {0.7}
+          canvasHeight  = {500}
+          canvasWidth   = {500}
+          minScale      = {0.5}
+          maxScale      = {1.2}
+          initialZoom   = {0.7}
         >
 
           {/* Doesn't consume or respond to clicks */}
           <Circle
-            cx={100}
-            cy={100}
-            r={42} 
-            stroke="red"
-            strokeWidth="2.5"
-            fill="blue"
+            cx          = {100}
+            cy          = {100}
+            r           = {42} 
+            stroke      = "red"
+            strokeWidth = "2.5"
+            fill        = "blue"
           />
 
           {/* Responds to clicks */}
@@ -51,12 +51,12 @@ class Example extends Component {
             onDrag          = {()=>{ console.log('onDrag!') }}
           >
             <Circle
-              cx={42}
-              cy={42}
-              r={42} 
-              stroke="blue"
-              strokeWidth="2.5"
-              fill="red"
+              cx          = {42}
+              cy          = {42}
+              r           = {42} 
+              stroke      = "blue"
+              strokeWidth = "2.5"
+              fill        = "red"
             />
           </SvgPanZoomElement>
 
