@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Svg, G, } from 'react-native-svg';
+import { G } from 'react-native-svg';
+const GView = G as any
 
 export interface Props {
-  position: {x:number, y:number},
+  x:number, 
+  y:number,
   onClick?: (evt:any) => void,
   onClickRelease?: (evt:any) => void,
   onClickCanceled?: (evt:any) => void,
@@ -23,9 +25,9 @@ export default class ResponderElement extends Component<Props,State> {
 
   render() {
     return (
-      <G
-        x={this.props.position.x}
-        y={this.props.position.y}
+      <GView
+        x={this.props.x}
+        y={this.props.y}
         onStartShouldSetResponder={(evt) => true}
         onMoveShouldSetResponder={(evt) => false}
         onResponderGrant={(evt) => { 
@@ -49,7 +51,7 @@ export default class ResponderElement extends Component<Props,State> {
         }}
       >
         {this.props.children}
-      </G>
+      </GView>
     )
   }
 }

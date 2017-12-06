@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import * as _ from 'lodash';
 
 import {
   View,
@@ -9,11 +8,8 @@ import {
   StyleSheet
 } from 'react-native';
 
-import {
-  Svg,
-  Circle,
-  Rect,
-} from 'react-native-svg';
+import Svg from 'react-native-svg';
+const SvgView = Svg as any
 
 import {
   Point,
@@ -203,14 +199,14 @@ export default class SvgPanZoom extends Component<Props, State> {
             ]
           }}
         >
-          <Svg
+          <SvgView
             style={{
               width: this.props.canvasWidth,
               height: this.props.canvasHeight,
             }}
           >
             {this.props.children}
-          </Svg>
+          </SvgView>
         </Animated.View>
 
       </View>

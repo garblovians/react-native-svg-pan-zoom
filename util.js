@@ -1,12 +1,9 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-function calcDistance(x1, y1, x2, y2) {
+export function calcDistance(x1, y1, x2, y2) {
     let dx = Math.abs(x1 - x2);
     let dy = Math.abs(y1 - y2);
     return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
 }
-exports.calcDistance = calcDistance;
-function calcCenter(x1, y1, x2, y2) {
+export function calcCenter(x1, y1, x2, y2) {
     function middle(p1, p2) {
         return {
             x: (p1.x + p2.x) / 2,
@@ -21,16 +18,14 @@ function calcCenter(x1, y1, x2, y2) {
         y: mid.y
     };
 }
-exports.calcCenter = calcCenter;
-function maxOffset(offset, windowDimension, imageDimension) {
+export function maxOffset(offset, windowDimension, imageDimension) {
     let max = windowDimension - imageDimension;
     if (max >= 0) {
         return 0;
     }
     return offset < max ? max : offset;
 }
-exports.maxOffset = maxOffset;
-function createIdentityTransform() {
+export function createIdentityTransform() {
     return {
         scaleX: 1,
         skewX: 0,
@@ -40,8 +35,7 @@ function createIdentityTransform() {
         translateY: 0
     };
 }
-exports.createIdentityTransform = createIdentityTransform;
-function createTranslationMatrix(translateX, translateY) {
+export function createTranslationMatrix(translateX, translateY) {
     return {
         scaleX: 1,
         skewX: 0,
@@ -51,8 +45,7 @@ function createTranslationMatrix(translateX, translateY) {
         translateY: translateY
     };
 }
-exports.createTranslationMatrix = createTranslationMatrix;
-function createScalingMatrix(scale) {
+export function createScalingMatrix(scale) {
     return {
         scaleX: scale,
         skewX: 0,
@@ -62,8 +55,7 @@ function createScalingMatrix(scale) {
         translateY: 0
     };
 }
-exports.createScalingMatrix = createScalingMatrix;
-function viewTransformMult(vtA, vtB) {
+export function viewTransformMult(vtA, vtB) {
     //Convert ViewTransform to conventional 3x3 matrices
     var mA = [vtA.scaleX, vtA.skewY, vtA.translateX, vtA.skewX, vtA.scaleY, vtA.translateY];
     var mB = [vtB.scaleX, vtB.skewY, vtB.translateX, vtB.skewX, vtB.scaleY, vtB.translateY];
@@ -84,8 +76,7 @@ function viewTransformMult(vtA, vtB) {
     };
     return result;
 }
-exports.viewTransformMult = viewTransformMult;
-function getBoundedPinchTransform(oldTransform, newTransform, minScale, maxScale) {
+export function getBoundedPinchTransform(oldTransform, newTransform, minScale, maxScale) {
     let boundedTransform = Object.assign({}, newTransform);
     //Calculate scale bounds
     boundedTransform.scaleX = Math.min(Math.max(boundedTransform.scaleX, minScale), maxScale);
@@ -96,8 +87,7 @@ function getBoundedPinchTransform(oldTransform, newTransform, minScale, maxScale
     }
     return boundedTransform;
 }
-exports.getBoundedPinchTransform = getBoundedPinchTransform;
-function getBoundedTouchTransform(initialTransform, oldTransform, newTransform, viewDim, canvasWidth, canvasHeight) {
+export function getBoundedTouchTransform(initialTransform, oldTransform, newTransform, viewDim, canvasWidth, canvasHeight) {
     let boundedTransform = Object.assign({}, newTransform);
     const scaledCanvas = {
         width: boundedTransform.scaleX * canvasWidth,
@@ -155,4 +145,3 @@ function getBoundedTouchTransform(initialTransform, oldTransform, newTransform, 
     boundedTransform.translateY = Math.min(Math.max(boundedTransform.translateY, minBounds.y), maxBounds.y);
     return boundedTransform;
 }
-exports.getBoundedTouchTransform = getBoundedTouchTransform;

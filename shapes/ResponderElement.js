@@ -1,14 +1,13 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const react_1 = require("react");
-const react_native_svg_1 = require("react-native-svg");
-class ResponderElement extends react_1.Component {
+import React, { Component } from 'react';
+import { G } from 'react-native-svg';
+const GView = G;
+export default class ResponderElement extends Component {
     constructor() {
         super(...arguments);
         this.releasedNaturally = true;
     }
     render() {
-        return (<react_native_svg_1.G x={this.props.position.x} y={this.props.position.y} onStartShouldSetResponder={(evt) => true} onMoveShouldSetResponder={(evt) => false} onResponderGrant={(evt) => {
+        return (<GView x={this.props.x} y={this.props.y} onStartShouldSetResponder={(evt) => true} onMoveShouldSetResponder={(evt) => false} onResponderGrant={(evt) => {
             this.releasedNaturally = true;
             this.props.onClick(evt);
         }} onResponderTerminationRequest={(evt) => {
@@ -25,7 +24,7 @@ class ResponderElement extends react_1.Component {
             }
         }}>
         {this.props.children}
-      </react_native_svg_1.G>);
+      </GView>);
     }
 }
 ResponderElement.defaultProps = {
@@ -34,4 +33,3 @@ ResponderElement.defaultProps = {
     onClickCanceled: (evt) => { },
     onDrag: (evt) => { }
 };
-exports.default = ResponderElement;

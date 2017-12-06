@@ -1,10 +1,8 @@
 /// <reference types="react" />
 import { Component } from 'react';
 export interface Props {
-    position: {
-        x: number;
-        y: number;
-    };
+    x: number;
+    y: number;
     onClick?: (evt: any) => void;
     onClickRelease?: (evt: any) => void;
     onClickCanceled?: (evt: any) => void;
