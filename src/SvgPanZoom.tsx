@@ -33,12 +33,14 @@ import {
  *********************************************************/
 
 export interface Props {
-  canvasHeight?: number,
-  canvasWidth?: number,
   minScale?: number,
   maxScale?: number,
   initialZoom?: number,
-  style?: ViewStyle,
+  canvasHeight?: number,
+  canvasWidth?: number,
+  canvasStyle?: ViewStyle,
+  viewStyle?: ViewStyle,
+  onZoom?: (zoom: number) => void
 }
 
 export interface State {
@@ -75,8 +77,11 @@ export default class SvgPanZoom extends Component<Props, State> {
     canvasHeight: 1080,
     canvasWidth:  720,
     minScale: 0.5,
-    maxScale: 1.2,
+    maxScale: 1.0,
     initialZoom: 0.7,
+    canvasStyle: {},
+    viewStyle: {},
+    onZoom: (zoom: number) => {},
   };
 
   mainViewRef: any
@@ -114,10 +119,12 @@ export default class SvgPanZoom extends Component<Props, State> {
       scaleAnimation: new Animated.Value(vt.scaleX),
     }
   }
-
+  
   dropNextEvt = 0
   
   componentWillMount() {
+    this.state.scaleAnimation.addListener((zoom)=> { this.props.onZoom(zoom.value) })
+
     this.prInstance = PanResponder.create({
       onStartShouldSetPanResponder: (evt, gestureState) => false,
       onStartShouldSetPanResponderCapture: (evt, gestureState) => false,
@@ -136,22 +143,18 @@ export default class SvgPanZoom extends Component<Props, State> {
         // console.log('evt: ' + evt.target + '*************')
 
         if(this.dropNextEvt > 0) { 
-          // console.log('drop required: ' + evt.target)
           this.dropNextEvt--
           return 
         }
         
         //Child element events are bubbled up but are not valid in out context. Sort them out
         if (evt.target !== this.prTargetSelf && evt.target !== this.prTargetOuter){ 
-          // console.log('illegal origin: ' + evt.target)
           this.dropNextEvt++
           return 
         }
 
         //HACK: the native event has some glitches with far-off coordinates. Sort out the worst ones
         if ((Math.abs(gestureState.vx) + Math.abs(gestureState.vx)) > 6) { 
-          // console.log('TOO FAAAAST! ' + evt.target)
-          // console.log(JSON.stringify(gestureState,null,2))
           this.dropNextEvt++
           return 
         }
@@ -171,9 +174,18 @@ export default class SvgPanZoom extends Component<Props, State> {
       },
       onPanResponderTerminate: (evt, gestureState) => { },
     })
+
   }
 
   render() {
+    const {
+      canvasHeight,
+      canvasWidth,
+      viewStyle,
+      canvasStyle,
+      children,
+    } = this.props
+
     return (
       <View
         ref={v => this.mainViewRef = v}
@@ -183,29 +195,30 @@ export default class SvgPanZoom extends Component<Props, State> {
             justifyContent: 'flex-start',
             alignItems: 'flex-start',
           },
-          this.props.style])}
+          viewStyle])}
         onLayout={this._onLayout}
         {...this.prInstance.panHandlers}
       >
 
         <Animated.View
           style={{
-            width: this.props.canvasWidth,
-            height: this.props.canvasHeight,
+            width: canvasWidth,
+            height: canvasHeight,
             transform: [
               { translateX: this.state.TranslationAnimation.x },
               { translateY: this.state.TranslationAnimation.y },
               { scale: this.state.scaleAnimation }
-            ]
+            ],
+            ...canvasStyle
           }}
         >
           <SvgView
             style={{
-              width: this.props.canvasWidth,
-              height: this.props.canvasHeight,
+              width: canvasWidth,
+              height: canvasHeight,
             }}
           >
-            {this.props.children}
+            {children}
           </SvgView>
         </Animated.View>
 
@@ -242,7 +255,7 @@ export default class SvgPanZoom extends Component<Props, State> {
     )
   }
 
-  zoomToPoint = (x: number, y: number, scale: number, duration: number = 700) => {
+  public zoomToPoint = (x: number, y: number, scale: number, duration: number = 700) => {
 
     const { viewDimensions } = this.state
 

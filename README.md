@@ -27,8 +27,10 @@ class Example extends Component {
           canvasHeight  = {500}
           canvasWidth   = {500}
           minScale      = {0.5}
-          maxScale      = {1.2}
           initialZoom   = {0.7}
+          onZoom        = {(zoom) => { console.log('onZoom:' + zoom) }}
+          canvasStyle   = {{ backgroundColor: 'yellow' }}
+          viewStyle     = {{ backgroundColor: 'green'  }}
         >
 
           {/* Doesn't consume or respond to clicks */}
@@ -70,6 +72,8 @@ class Example extends Component {
 
 ## Additional notes
 The drag and zoom gestures are constrained to never leave the SvgPanZoom canvas. It's size as well as scaling constraints can be set through props as shown in the above example.
+
+It is recommended not to set maxScale above 1 as this results in blurred react-native-svg elements. Instead, increase your SVG element dimensions and set minScale lower.
 
 ## License
 

@@ -6,12 +6,14 @@ import { Point, ViewTransform, ViewDimensions } from './interfaces';
  * Interfaces
  *********************************************************/
 export interface Props {
-    canvasHeight?: number;
-    canvasWidth?: number;
     minScale?: number;
     maxScale?: number;
     initialZoom?: number;
-    style?: ViewStyle;
+    canvasHeight?: number;
+    canvasWidth?: number;
+    canvasStyle?: ViewStyle;
+    viewStyle?: ViewStyle;
+    onZoom?: (zoom: number) => void;
 }
 export interface State {
     layoutKnown: boolean;
